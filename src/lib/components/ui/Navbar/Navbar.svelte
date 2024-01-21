@@ -2,12 +2,8 @@
   import NavbarLink from '$lib/components/ui/Navbar/NavbarLink.svelte';
   const routes = [
     {
-      name: 'Subsite',
-      path: '/subsite',
-    },
-    {
-      name: 'About',
-      path: '/about',
+      name: 'Lyrics',
+      path: '/lyrics',
     },
   ];
 </script>
@@ -41,7 +37,7 @@
         {/each}
       </ul>
     </div>
-    <a href="/" class="btn btn-ghost normal-case text-xl">App Name</a>
+    <a href="/" class="btn btn-ghost normal-case text-xl">Lyric Drill</a>
   </div>
   <div class="hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
