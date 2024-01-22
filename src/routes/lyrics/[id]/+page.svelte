@@ -34,11 +34,9 @@
 </script>
 
 <div class="flex flex-1 flex-col w-full items-center gap-2">
-  <div class="w-full relative">
-    <a class="btn btn-neutral absolute left-2" href="/lyrics">
-      <button>
-        <Icon icon="mdi:arrow-left-circle" class="w-6 h-6" />
-      </button>
+  <div class="w-full">
+    <a class="btn btn-neutral mb-1" href="/lyrics">
+      <Icon icon="mdi:arrow-left-circle" class="w-6 h-6" />
     </a>
     <h1 class="text-center mb-2">{song.name}</h1>
   </div>
