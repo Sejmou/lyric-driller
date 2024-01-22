@@ -5,6 +5,10 @@
       name: 'Lyrics',
       path: '/lyrics',
     },
+    {
+      name: 'Settings',
+      path: '/settings',
+    },
   ];
 </script>
 

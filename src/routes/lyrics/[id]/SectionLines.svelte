@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { alwaysShowFirstLine } from '$lib/stores/settings';
+  import { get } from 'svelte/store';
   import Icon from '@iconify/svelte';
   export let lines: string[];
 
@@ -6,8 +8,14 @@
   $: if (lines) init();
 
   function init() {
-    visibleLines = [];
-    remainingLines = [...lines];
+    const showFirstLine = get(alwaysShowFirstLine);
+    if (showFirstLine) {
+      visibleLines = [lines[0]];
+      remainingLines = [...lines.slice(1)];
+    } else {
+      visibleLines = [];
+      remainingLines = [...lines];
+    }
   }
 
   let visibleLines: string[] = [];
