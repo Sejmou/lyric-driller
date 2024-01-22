@@ -1,2 +1,4 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>Hi!</h1>
+<p>This is a website for learning lyrics.</p>
+<p>It's still under construction, but you can already try it out.</p>
+<p>Have fun!</p>
