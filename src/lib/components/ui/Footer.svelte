@@ -9,7 +9,7 @@
     <a
       class="flex items-center"
       target="_blank"
-      href="https://github.com/lyric-drill"
+      href="https://github.com/Sejmou/lyric-drill"
     >
       <Icon icon="mdi-github" class="w-6 h-6" />
     </a>
