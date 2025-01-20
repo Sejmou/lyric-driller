@@ -1,12 +1,10 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { Song, SongSection } from '$lib/types/song';
   import SectionEditor from './SectionEditor.svelte';
 
-  export let song: Song;
 
-  $: name = song.name;
-  $: sections = song.lyrics;
-  $: disabled = name.trim() === '' || sections.length === 0;
 
   function handleAdd(section: SongSection) {
     sections = [...sections, section];
@@ -21,14 +19,28 @@
     name = target.value;
   }
 
-  export let onCancel: () => void;
-  export let onSave: () => void;
+  interface Props {
+    song: Song;
+    onCancel: () => void;
+    onSave: () => void;
+  }
+
+  let { song, onCancel, onSave }: Props = $props();
+  let name;
+  run(() => {
+    name = song.name;
+  });
+  let sections;
+  run(() => {
+    sections = song.lyrics;
+  });
+  let disabled = $derived(name.trim() === '' || sections.length === 0);
 </script>
 
 <input
   type="text"
   value={name}
-  on:input={handleNameInput}
+  oninput={handleNameInput}
   placeholder="Song name"
 />
 {#each sections as section, index}
@@ -41,8 +53,8 @@
   />
 {/each}
 <div class="w-full flex gap-2">
-  <button {disabled} class="btn btn-primary" on:click={() => onSave()}
+  <button {disabled} class="btn btn-primary" onclick={() => onSave()}
     >Save</button
   >
-  <button class="btn btn-error" on:click={() => onCancel()}>Cancel</button>
+  <button class="btn btn-error" onclick={() => onCancel()}>Cancel</button>
 </div>

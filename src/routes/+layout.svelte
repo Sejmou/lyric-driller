@@ -2,6 +2,11 @@
   import '../app.css';
   import Navbar from '$lib/components/ui/Navbar/Navbar.svelte';
   import Footer from '$lib/components/ui/Footer.svelte';
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
 </script>
 
 <!-- TODO: Change this as needed. -->
@@ -18,7 +23,7 @@
   <main
     class="flex-1 flex flex-col p-4 w-full max-w-screen-lg mx-auto my-auto box-border"
   >
-    <slot />
+    {@render children?.()}
   </main>
   <Footer />
 </div>

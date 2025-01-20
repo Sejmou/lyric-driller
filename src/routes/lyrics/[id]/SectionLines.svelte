@@ -1,11 +1,15 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { alwaysShowFirstLine } from '$lib/stores/settings';
   import { get } from 'svelte/store';
   import Icon from '@iconify/svelte';
-  export let lines: string[];
+  interface Props {
+    lines: string[];
+  }
 
-  // this is a bit whacky, but it works
-  $: if (lines) init();
+  let { lines }: Props = $props();
+
 
   function init() {
     const showFirstLine = get(alwaysShowFirstLine);
@@ -18,8 +22,8 @@
     }
   }
 
-  let visibleLines: string[] = [];
-  let remainingLines: string[] = [];
+  let visibleLines: string[] = $state([]);
+  let remainingLines: string[] = $state([]);
 
   function handleNext() {
     const next = remainingLines[0];
@@ -35,7 +39,11 @@
     init();
   }
 
-  $: atLastLine = remainingLines.length === 0;
+  // this is a bit whacky, but it works
+  run(() => {
+    if (lines) init();
+  });
+  let atLastLine = $derived(remainingLines.length === 0);
 </script>
 
 <div class="flex-1 overflow-y-auto">
@@ -44,10 +52,10 @@
   {/each}
 </div>
 <div class="flex gap-2">
-  <button class="btn btn-neutral" on:click={handleReset}>
+  <button class="btn btn-neutral" onclick={handleReset}>
     <Icon icon="mdi:restart" class="w-8 h-8" />
   </button>
-  <button class="btn btn-neutral" on:click={handleNext} disabled={atLastLine}
+  <button class="btn btn-neutral" onclick={handleNext} disabled={atLastLine}
     ><Icon icon="ci:add-row" class="w-8 h-8" /></button
   >
 </div>

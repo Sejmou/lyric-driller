@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Song, SongSection } from '$lib/types/song';
   import LyricsEditor from './LyricsEditor.svelte';
-  let song: Song | null = null;
+  let song: Song | null = $state(null);
 
   function handleFileInput(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -60,10 +60,10 @@
       class="file-input"
       type="file"
       accept=".txt"
-      on:change={handleFileInput}
+      onchange={handleFileInput}
     />
     <span>or</span>
-    <button class="btn" on:click={handleEnterLyrics}>Enter lyrics</button>
+    <button class="btn" onclick={handleEnterLyrics}>Enter lyrics</button>
   </div>
 {:else}
   <LyricsEditor {song} onSave={handleSave} onCancel={handleCancel} />

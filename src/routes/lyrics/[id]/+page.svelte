@@ -2,15 +2,19 @@
   import type { SongSection } from '$lib/types/song';
   import Icon from '@iconify/svelte';
   import type { PageData } from './$types';
-  export let data: PageData;
   import { onMount } from 'svelte';
   import SectionLines from './SectionLines.svelte';
+  interface Props {
+    data: PageData;
+  }
 
-  $: song = data.song;
-  $: sections = song.lyrics;
+  let { data }: Props = $props();
 
-  let sectionIdx: number;
-  let section: SongSection;
+  let song = $derived(data.song);
+  let sections = $derived(song.lyrics);
+
+  let sectionIdx: number = $state();
+  let section: SongSection = $state();
 
   onMount(() => {
     sectionIdx = 0;
@@ -29,8 +33,8 @@
     section = sections[sectionIdx];
   }
 
-  $: hasNext = sectionIdx < sections.length - 1;
-  $: hasPrev = sectionIdx > 0;
+  let hasNext = $derived(sectionIdx < sections.length - 1);
+  let hasPrev = $derived(sectionIdx > 0);
 </script>
 
 <div class="flex flex-1 flex-col w-full items-center gap-2">
@@ -44,7 +48,7 @@
     <div class="flex gap-2 w-full justify-center items-center">
       <button
         class="btn btn-neutral"
-        on:click={handlePrevSection}
+        onclick={handlePrevSection}
         disabled={!hasPrev}
       >
         <Icon icon="mdi:skip-previous" class="w-8 h-8" />
@@ -52,7 +56,7 @@
       <span>{section.name}</span>
       <button
         class="btn btn-neutral"
-        on:click={handleNextSection}
+        onclick={handleNextSection}
         disabled={!hasNext}
       >
         <Icon icon="mdi:skip-next" class="w-8 h-8" />

@@ -3,19 +3,29 @@
   import Icon from '@iconify/svelte';
   import { onMount } from 'svelte';
 
-  export let section: SongSection;
-  export let index: number;
-  export let onAdd: (section: SongSection) => void;
-  export let canRemove: boolean = true;
-  export let onRemove: (index: number) => void;
+  interface Props {
+    section: SongSection;
+    index: number;
+    onAdd: (section: SongSection) => void;
+    canRemove?: boolean;
+    onRemove: (index: number) => void;
+  }
 
-  let inputElement: HTMLTextAreaElement;
+  let {
+    section = $bindable(),
+    index,
+    onAdd,
+    canRemove = true,
+    onRemove
+  }: Props = $props();
+
+  let inputElement: HTMLTextAreaElement = $state();
 
   onMount(() => {
     inputElement.focus();
   });
 
-  $: linesStr = section.lines.join('\n');
+  let linesStr = $derived(section.lines.join('\n'));
 
   function handleInput(event: Event) {
     const target = event.target as HTMLTextAreaElement;
@@ -62,8 +72,8 @@
   <input type="text" bind:value={section.name} placeholder="Section name" />
   {#if canRemove}
     <button
-      on:click={() => onRemove(index)}
-      on:keydown={event => {
+      onclick={() => onRemove(index)}
+      onkeydown={event => {
         if (event.key === 'Enter') onRemove(index);
       }}
     >
@@ -75,5 +85,5 @@
   class="w-full h-32 p-2 border rounded"
   value={linesStr}
   bind:this={inputElement}
-  on:input={handleInput}
-/>
+  oninput={handleInput}
+></textarea>

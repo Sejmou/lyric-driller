@@ -1,10 +1,14 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
 
-  export let index: number;
-  export let songName: string;
-  export let id: string;
-  let hovered = false;
+  interface Props {
+    index: number;
+    songName: string;
+    id: string;
+  }
+
+  let { index, songName, id }: Props = $props();
+  let hovered = $state(false);
 
   function handleMouseEnter() {
     hovered = true;
@@ -16,8 +20,8 @@
 </script>
 
 <li
-  on:mouseenter={handleMouseEnter}
-  on:mouseleave={handleMouseLeave}
+  onmouseenter={handleMouseEnter}
+  onmouseleave={handleMouseLeave}
   class="flex items-center justify-between hover:opacity-60 pt-2"
 >
   <a href={`/lyrics/${id}`}>

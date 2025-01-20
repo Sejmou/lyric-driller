@@ -2,9 +2,13 @@
   import type { PageData } from './$types';
   import LyricListItem from './LyricListItem.svelte';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
 
-  $: songs = data.songs;
+  let { data }: Props = $props();
+
+  let songs = $derived(data.songs);
 </script>
 
 <div class="card bg-base-100">
